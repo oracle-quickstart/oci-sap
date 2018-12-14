@@ -71,7 +71,7 @@ variable "instance_os" {
 
 variable "linux_os_version" {
   description = "Operating system version for all Linux instances"
-  default     = "7.5"
+  default     = "7.6"
 }
 
 variable "WinInstanceOS" {
@@ -102,31 +102,31 @@ variable "bastion_linux_boot_volume_size" {
   default     = "50"
 }
 
-# Bastion Windows Instance Variables
-variable "bastion_windows_display_name" {
-  default = "Bastion-Win"
+# SAP Windows Client Instance Variables
+variable "sap_client_windows_display_name" {
+  default = "SAP-Windows-Client"
 }
 
-variable "bastion_windows_hostname" {
-  default = "bastion-win"
+variable "sap_client_windows_hostname" {
+  default = "sap-win-client"
 }
 
-variable "bastion_windows_instance_shape" {
+variable "sap_client_windows_instance_shape" {
   default = "VM.Standard2.4"
 }
 
-variable "bastion_windows_boot_volume_size" {
+variable "sap_client_windows_boot_volume_size" {
   description = "boot volume size in GB"
   default     = "300"
 }
 
 # SAP Windows Instance Variables
 variable "sap_windows_display_name" {
-  default = "SAP-Win"
+  default = "SAP-Windows-App-Tier"
 }
 
 variable "sap_windows_hostname" {
-  default = "sap-win"
+  default = "sap-win-app"
 }
 
 variable "sap_windows_instance_shape" {
@@ -140,11 +140,11 @@ variable "sap_windows_boot_volume_size" {
 
 # SAP Linux Instance Variables
 variable "sap_linux_display_name" {
-  default = "SAP-Linux"
+  default = "SAP-Linux-App-Tier"
 }
 
 variable "sap_linux_hostname" {
-  default = "sap-lnx"
+  default = "sap-lnx-app"
 }
 
 variable "sap_linux_instance_shape" {
@@ -152,6 +152,24 @@ variable "sap_linux_instance_shape" {
 }
 
 variable "sap_linux_boot_volume_size" {
+  description = "boot volume size in GB"
+  default     = "500"
+}
+
+# DB Linux Instance Variables
+variable "db_linux_display_name" {
+  default = "DB-Linux-App-Tier"
+}
+
+variable "db_linux_hostname" {
+  default = "sapdb"
+}
+
+variable "db_linux_instance_shape" {
+  default = "VM.Standard2.8"
+}
+
+variable "db_linux_boot_volume_size" {
   description = "boot volume size in GB"
   default     = "500"
 }
@@ -184,4 +202,40 @@ variable "max_files" {
 
 locals {
   sap_fss_mount_target_ip_address = "${lookup(data.oci_core_private_ips.ip_sap_fss_mount_target.private_ips[0], "ip_address")}"
+}
+
+# SAP App Block and Swap Volumes
+
+variable "sap_app_block_display_name" {
+  default = "sap_app_bv"
+}
+
+variable "sap_app_bv_size" {
+  default = "100"
+}
+
+variable "sap_app_block_swap_display_name" {
+  default = "sap_app_swap_bv"
+}
+
+variable "sap_app_swap_bv_size" {
+  default = "64"
+}
+
+# SAP DB Block and Swap Volumes
+
+variable "sap_db_block_display_name" {
+  default = "sap_db_app_bv"
+}
+
+variable "sap_db_bv_size" {
+  default = "200"
+}
+
+variable "sap_db_block_swap_display_name" {
+  default = "sap_db_swap_bv"
+}
+
+variable "sap_swap_db_bv_size" {
+  default = "64"
 }
