@@ -166,7 +166,7 @@ variable "db_linux_hostname" {
 }
 
 variable "db_linux_instance_shape" {
-  default = "VM.Standard2.8"
+  default = "VM.Standard2.24"
 }
 
 variable "db_linux_boot_volume_size" {
@@ -189,7 +189,7 @@ variable "fss_sap_export_set_name" {
 }
 
 variable "export_path_fss_sap" {
-  default = "/sap/fss"
+  default = "/sapmnt"
 }
 
 variable "max_byte" {
