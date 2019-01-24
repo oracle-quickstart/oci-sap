@@ -17,47 +17,59 @@ resource "oci_core_instance" "bastion_linux_instances" {
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
   }
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
 
-# SAP Client Windows Instances
+# SAP Router Instances
 
-resource "oci_core_instance" "sap_client_windows_instances" {
+resource "oci_core_instance" "sap_router_instances" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
-  display_name        = "${var.sap_client_windows_display_name}"
-  shape               = "${var.sap_client_windows_instance_shape}"
-  hostname_label      = "${var.sap_client_windows_hostname}"
-  subnet_id           = "${oci_core_subnet.bastion_public_subnets.id}"
+  display_name        = "${var.sap_router_display_name}"
+  shape               = "${var.sap_router_instance_shape}"
+  hostname_label      = "${var.sap_router_hostname}"
+  subnet_id           = "${oci_core_subnet.sap_route_private_subnets.id}"
 
   source_details {
     source_type             = "image"
-    source_id               = "${data.oci_core_images.WinInstanceImageOCID.images.0.id}"
-    boot_volume_size_in_gbs = "${var.sap_client_windows_boot_volume_size}"
+    source_id               = "${data.oci_core_images.InstanceImageOCID.images.0.id}"
+    boot_volume_size_in_gbs = "${var.sap_router_boot_volume_size}"
   }
 
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
   }
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
 
-# SAP Windows Application Instance
+# SAP Web Dispatcher Instance
 
-resource "oci_core_instance" "sap_windows_instances" {
+resource "oci_core_instance" "sap_web_dis_instances" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
-  display_name        = "${var.sap_windows_display_name}"
-  shape               = "${var.sap_windows_instance_shape}"
-  hostname_label      = "${var.sap_windows_hostname}"
-  subnet_id           = "${oci_core_subnet.sap_private_subnets.id}"
+  display_name        = "${var.sap_web_dis_display_name}"
+  shape               = "${var.sap_web_dis_instance_shape}"
+  hostname_label      = "${var.sap_web_dis_hostname}"
+  subnet_id           = "${oci_core_subnet.sap_web_public_subnets.id}"
 
   source_details {
     source_type             = "image"
-    source_id               = "${data.oci_core_images.WinInstanceImageOCID.images.0.id}"
-    boot_volume_size_in_gbs = "${var.sap_windows_boot_volume_size}"
+    source_id               = "${data.oci_core_images.InstanceImageOCID.images.0.id}"
+    boot_volume_size_in_gbs = "${var.sap_web_dis_boot_volume_size}"
   }
 
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "sleep 10"
   }
 }
 
@@ -80,6 +92,10 @@ resource "oci_core_instance" "sap_linux_instances" {
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
   }
+
+  provisioner "local-exec" {
+    command = "sleep 10"
+  }
 }
 
 # DB Linux Application Instance
@@ -100,5 +116,9 @@ resource "oci_core_instance" "db_linux_instances" {
 
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "sleep 10"
   }
 }
