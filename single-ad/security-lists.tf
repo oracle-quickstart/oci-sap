@@ -5,14 +5,17 @@ locals {
   anywhere           = "0.0.0.0/0"
   db_port            = "1521"
   ssh_port           = "22"
-  rdp_port           = "3389"
   winrm_port         = "5986"
   fss_ports          = ["2048", "2050", "111"]
   sap_dispatcher_min = "3200"
   sap_dispatcher_max = "3299"
+  http_port          = "80"
+  https_port         = "443"
+  vnc_port_min       = "5900"
+  vnc_port_max       = "5902"
 }
 
-# Linux and Windows Bastion Security List
+# Linux Bastion Security List
 resource "oci_core_security_list" "BastionSecList" {
   compartment_id = "${var.compartment_ocid}"
   display_name   = "BastionSecList"
@@ -37,12 +40,12 @@ resource "oci_core_security_list" "BastionSecList" {
     },
     {
       tcp_options {
-        "min" = "${local.rdp_port}"
-        "max" = "${local.rdp_port}"
+        "min" = "${local.vnc_port_min}"
+        "max" = "${local.vnc_port_max}"
       }
 
       protocol = "${local.tcp_protocol}"
-      source   = "${local.anywhere}"
+      source   = "${var.vcn_cidr}"
     },
   ]
 }
@@ -107,8 +110,78 @@ resource "oci_core_security_list" "SAP_AppSecList" {
     },
     {
       tcp_options {
-        "min" = "${local.rdp_port}"
-        "max" = "${local.rdp_port}"
+        "min" = "${local.sap_dispatcher_min}"
+        "max" = "${local.sap_dispatcher_max}"
+      }
+
+      protocol = "${local.tcp_protocol}"
+      source   = "${var.vcn_cidr}"
+    },
+  ]
+}
+
+# SAP Web Dispatcher Security List
+resource "oci_core_security_list" "SAP_WebSecList" {
+  compartment_id = "${var.compartment_ocid}"
+  display_name   = "SAP_WebSecList"
+  vcn_id         = "${oci_core_virtual_network.vcn.id}"
+
+  egress_security_rules = [
+    {
+      protocol    = "${local.tcp_protocol}"
+      destination = "${local.anywhere}"
+    },
+  ]
+
+  ingress_security_rules = [
+    {
+      tcp_options {
+        "min" = "${local.ssh_port}"
+        "max" = "${local.ssh_port}"
+      }
+
+      protocol = "${local.tcp_protocol}"
+      source   = "${var.vcn_cidr}"
+    },
+    {
+      tcp_options {
+        "min" = "${local.http_port}"
+        "max" = "${local.http_port}"
+      }
+
+      protocol = "${local.tcp_protocol}"
+      source   = "${var.vcn_cidr}"
+    },
+    {
+      tcp_options {
+        "min" = "${local.https_port}"
+        "max" = "${local.https_port}"
+      }
+
+      protocol = "${local.tcp_protocol}"
+      source   = "${var.vcn_cidr}"
+    },
+  ]
+}
+
+# SAP Router Security List
+resource "oci_core_security_list" "SAP_RouterSecList" {
+  compartment_id = "${var.compartment_ocid}"
+  display_name   = "SAP_RouterSecList"
+  vcn_id         = "${oci_core_virtual_network.vcn.id}"
+
+  egress_security_rules = [
+    {
+      protocol    = "${local.tcp_protocol}"
+      destination = "${local.anywhere}"
+    },
+  ]
+
+  ingress_security_rules = [
+    {
+      tcp_options {
+        "min" = "${local.ssh_port}"
+        "max" = "${local.ssh_port}"
       }
 
       protocol = "${local.tcp_protocol}"
@@ -175,6 +248,30 @@ resource "oci_core_security_list" "FSS_AppSecList" {
 
       protocol = "${local.udp_protocol}"
       source   = "${var.vcn_cidr}"
+    },
+  ]
+}
+
+# Load Balancer Security List
+resource "oci_core_security_list" "LB_SecList" {
+  display_name   = "LB_SecList"
+  compartment_id = "${oci_core_virtual_network.vcn.compartment_id}"
+  vcn_id         = "${oci_core_virtual_network.vcn.id}"
+
+  egress_security_rules = [{
+    protocol    = "all"
+    destination = "0.0.0.0/0"
+  }]
+
+  ingress_security_rules = [
+    {
+      protocol = "6"
+      source   = "0.0.0.0/0"
+
+      tcp_options {
+        "min" = 80
+        "max" = 80
+      }
     },
   ]
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 size=`sudo fdisk -l /dev/sdc | grep "GB" | cut -f 1 -d ',' | cut -f 3- -d '/' | grep sdc | awk '{ print $2 }' | cut -f 1 -d '.'`
-value=70
+value=100
 if [ $size -lt $value ]
  	then
         echo -e "o\nn\np\n1\n\n\nw" | sudo fdisk /dev/sdc

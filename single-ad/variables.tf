@@ -36,6 +36,24 @@ variable "bastion_subnet_label" {
   default = "bastion"
 }
 
+# SAP Web Dispatcher Public Subnet 
+variable "sap_web_subnet_cidr_block" {
+  default = "10.0.5.0/24"
+}
+
+variable "sap_web_subnet_label" {
+  default = "sapwebnet"
+}
+
+# SAP Router Private Subnet 
+variable "sap_route_subnet_cidr_block" {
+  default = "10.0.6.0/24"
+}
+
+variable "sap_route_subnet_label" {
+  default = "saprouternet"
+}
+
 # SAP Application Private Subnet 
 variable "sap_subnet_cidr_block" {
   default = "10.0.2.0/24"
@@ -61,6 +79,41 @@ variable "fss_subnet_cidr_block" {
 
 variable "fss_subnet_label" {
   default = "fssnet"
+}
+
+# Load Balancer Private Subnet 
+variable "lb_subnet1_cidr_block" {
+  default = "10.0.7.0/24"
+}
+
+variable "lb_subnet1_label" {
+  default = "lbsubnet1"
+}
+
+variable "lb_subnet2_cidr_block" {
+  default = "10.0.8.0/24"
+}
+
+variable "lb_subnet2_label" {
+  default = "lbsubnet2"
+}
+
+# Load Balancer Shape
+
+variable "lb_shape" {
+  default = "100Mbps"
+}
+
+variable "lb_display_name" {
+  default = "SAP_Load_Balancer"
+}
+
+variable "lb_backend_set_name" {
+  default = "web_dispatcher_backend"
+}
+
+variable "lb_backend_listener_name" {
+  default = "lb_listener_sap"
 }
 
 # OS Images
@@ -102,38 +155,38 @@ variable "bastion_linux_boot_volume_size" {
   default     = "50"
 }
 
-# SAP Windows Client Instance Variables
-variable "sap_client_windows_display_name" {
-  default = "SAP-Windows-Client"
+# SAP Router Instance Variables
+variable "sap_router_display_name" {
+  default = "SAP-Router"
 }
 
-variable "sap_client_windows_hostname" {
-  default = "sap-win-client"
+variable "sap_router_hostname" {
+  default = "sap-router"
 }
 
-variable "sap_client_windows_instance_shape" {
-  default = "VM.Standard2.4"
+variable "sap_router_instance_shape" {
+  default = "VM.Standard2.1"
 }
 
-variable "sap_client_windows_boot_volume_size" {
+variable "sap_router_boot_volume_size" {
   description = "boot volume size in GB"
   default     = "300"
 }
 
-# SAP Windows Instance Variables
-variable "sap_windows_display_name" {
-  default = "SAP-Windows-App-Tier"
+# SAP Web Dispatcher Variables
+variable "sap_web_dis_display_name" {
+  default = "SAP-Web-Dispatcher"
 }
 
-variable "sap_windows_hostname" {
-  default = "sap-win-app"
+variable "sap_web_dis_hostname" {
+  default = "sap-web-dis"
 }
 
-variable "sap_windows_instance_shape" {
-  default = "VM.Standard2.8"
+variable "sap_web_dis_instance_shape" {
+  default = "VM.Standard2.1"
 }
 
-variable "sap_windows_boot_volume_size" {
+variable "sap_web_dis_boot_volume_size" {
   description = "boot volume size in GB"
   default     = "300"
 }
@@ -148,7 +201,7 @@ variable "sap_linux_hostname" {
 }
 
 variable "sap_linux_instance_shape" {
-  default = "VM.Standard2.8"
+  default = "VM.Standard2.4"
 }
 
 variable "sap_linux_boot_volume_size" {
@@ -166,7 +219,7 @@ variable "db_linux_hostname" {
 }
 
 variable "db_linux_instance_shape" {
-  default = "VM.Standard2.24"
+  default = "VM.DenseIO2.8"
 }
 
 variable "db_linux_boot_volume_size" {
@@ -211,7 +264,7 @@ variable "sap_app_block_display_name" {
 }
 
 variable "sap_app_bv_size" {
-  default = "100"
+  default = "150"
 }
 
 variable "sap_app_block_swap_display_name" {
@@ -219,23 +272,15 @@ variable "sap_app_block_swap_display_name" {
 }
 
 variable "sap_app_swap_bv_size" {
-  default = "64"
+  default = "96"
 }
 
 # SAP DB Block and Swap Volumes
-
-variable "sap_db_block_display_name" {
-  default = "sap_db_app_bv"
-}
-
-variable "sap_db_bv_size" {
-  default = "200"
-}
 
 variable "sap_db_block_swap_display_name" {
   default = "sap_db_swap_bv"
 }
 
 variable "sap_swap_db_bv_size" {
-  default = "64"
+  default = "96"
 }

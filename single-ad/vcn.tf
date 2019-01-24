@@ -36,7 +36,7 @@ resource "oci_core_service_gateway" "svcgtw" {
 resource "oci_core_route_table" "PublicRT" {
   compartment_id = "${var.compartment_ocid}"
   vcn_id         = "${oci_core_virtual_network.vcn.id}"
-  display_name   = "${var.vcn_dns_label}pubrt"
+  display_name   = "${var.vcn_dns_label}_pubrt"
 
   route_rules {
     destination       = "0.0.0.0/0"
@@ -98,6 +98,43 @@ resource "oci_core_subnet" "bastion_public_subnets" {
   dns_label           = "${var.bastion_subnet_label}"
   route_table_id      = "${oci_core_route_table.PublicRT.id}"
   security_list_ids   = ["${oci_core_security_list.BastionSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
+}
+
+# SAP Web Dispatcher Public Subnet
+resource "oci_core_subnet" "sap_web_public_subnets" {
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+  compartment_id      = "${var.compartment_ocid}"
+  vcn_id              = "${oci_core_virtual_network.vcn.id}"
+  cidr_block          = "${var.sap_web_subnet_cidr_block}"
+  display_name        = "${var.sap_web_subnet_label}"
+  dns_label           = "${var.sap_web_subnet_label}"
+  route_table_id      = "${oci_core_route_table.PublicRT.id}"
+  security_list_ids   = ["${oci_core_security_list.SAP_WebSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
+}
+
+# SAP Router Private Subnet
+resource "oci_core_subnet" "sap_route_private_subnets" {
+  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+  compartment_id             = "${var.compartment_ocid}"
+  vcn_id                     = "${oci_core_virtual_network.vcn.id}"
+  cidr_block                 = "${var.sap_route_subnet_cidr_block}"
+  display_name               = "${var.sap_route_subnet_label}"
+  dns_label                  = "${var.sap_route_subnet_label}"
+  prohibit_public_ip_on_vnic = "true"
+  route_table_id             = "${oci_core_route_table.SAP_PrivateRT.id}"
+  security_list_ids          = ["${oci_core_security_list.SAP_RouterSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
 
 # SAP Application Private Subnet
@@ -111,6 +148,10 @@ resource "oci_core_subnet" "sap_private_subnets" {
   prohibit_public_ip_on_vnic = "true"
   route_table_id             = "${oci_core_route_table.SAP_PrivateRT.id}"
   security_list_ids          = ["${oci_core_security_list.SAP_AppSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
 
 # Database Private Subnet
@@ -124,6 +165,10 @@ resource "oci_core_subnet" "db_private_subnets" {
   prohibit_public_ip_on_vnic = "true"
   route_table_id             = "${oci_core_route_table.DB_PrivateRT.id}"
   security_list_ids          = ["${oci_core_security_list.DBSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
 
 # FSS Private Subnet
@@ -137,4 +182,39 @@ resource "oci_core_subnet" "fss_private_subnets" {
   prohibit_public_ip_on_vnic = "true"
   route_table_id             = "${oci_core_route_table.FSS_PrivateRT.id}"
   security_list_ids          = ["${oci_core_security_list.FSS_AppSecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
+}
+
+# Load Balancer Subnets
+resource "oci_core_subnet" "lb_subnet1" {
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+  compartment_id      = "${var.compartment_ocid}"
+  vcn_id              = "${oci_core_virtual_network.vcn.id}"
+  cidr_block          = "${var.lb_subnet1_cidr_block}"
+  display_name        = "${var.lb_subnet1_label}"
+  dns_label           = "${var.lb_subnet1_label}"
+  route_table_id      = "${oci_core_route_table.PublicRT.id}"
+  security_list_ids   = ["${oci_core_security_list.LB_SecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
+}
+
+resource "oci_core_subnet" "lb_subnet2" {
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -0],"name")}"
+  compartment_id      = "${var.compartment_ocid}"
+  vcn_id              = "${oci_core_virtual_network.vcn.id}"
+  cidr_block          = "${var.lb_subnet2_cidr_block}"
+  display_name        = "${var.lb_subnet2_label}"
+  dns_label           = "${var.lb_subnet2_label}"
+  route_table_id      = "${oci_core_route_table.PublicRT.id}"
+  security_list_ids   = ["${oci_core_security_list.LB_SecList.id}"]
+
+  provisioner "local-exec" {
+    command = "sleep 5"
+  }
 }
