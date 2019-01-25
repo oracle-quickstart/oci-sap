@@ -117,8 +117,4 @@ resource "oci_core_instance" "db_linux_instances" {
   metadata {
     ssh_authorized_keys = "${var.ssh_public_key}"
   }
-
-  provisioner "local-exec" {
-    command = "sleep 10"
-  }
 }

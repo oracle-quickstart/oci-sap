@@ -8,24 +8,29 @@ resource "null_resource" "connect_to_bastion_instance" {
     private_key = "${var.ssh_private_key}"
   }
 
+  provisioner "file" {
+    source      = "script-sap-bast.sh"
+    destination = "/tmp/script-sap-bast.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo yum -y install nfs-utils > nfs-utils-install.log",
       "sudo mkdir ${var.export_path_fss_sap}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
-      "sudo yum groupinstall 'Server with GUI' -y",
-      "sudo systemctl set-default graphical.target",
-      "sudo yum install tigervnc-server -y",
-      "sudo firewall-cmd --zone=public --permanent --add-port=5900-5902/tcp",
-      "sudo firewall-cmd --reload",
+      "chmod +x /tmp/script-sap-bast.sh",
+      "/tmp/script-sap-bast.sh",
+      "sudo bash -c 'echo search ${var.vcn_dns_label}.oraclevcn.com ${var.database_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_web_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_route_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.bastion_subnet_label}.${var.vcn_dns_label}.oraclevcn.com > /etc/resolv.conf'",
+      "sudo bash -c 'echo nameserver 169.254.169.254 >> /etc/resolv.conf'",
+      "sudo bash -c 'chattr +i /etc/resolv.conf'",
     ]
   }
 }
 
 # Connect to SAP APP instance mount FSS and resize root partion
 resource "null_resource" "connect_to_sap_app_instance" {
-  depends_on = ["oci_core_volume_attachment.sap_app_block_attach", "oci_core_volume_attachment.sap_app_block_attach_swap"]
+  depends_on = ["oci_core_volume_attachment.sap_app_block_attach", "oci_core_volume_attachment.sap_app_block_attach_swap", "null_resource.connect_to_bastion_instance"]
 
   connection {
     type                = "ssh"
@@ -55,25 +60,16 @@ resource "null_resource" "connect_to_sap_app_instance" {
       "sudo mkdir ${var.export_path_fss_sap}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
-      "sudo growpart /dev/sda 3",
-      "sudo yum groupinstall 'Server with GUI' -y",
-      "sudo systemctl set-default graphical.target",
-      "sudo yum install uuid libaio-devel ksh gcc -y",
-      "sudo firewall-cmd --zone=public --permanent --add-port=3200-3299/tcp",
-      "sudo firewall-cmd --reload",
-      "sudo bash -c 'echo kernel.sem=1250 256000 100 1024 >> /etc/sysctl.d/sap.conf'",
-      "sudo bash -c 'echo vm.max_map_count=2000000 >> /etc/sysctl.d/sap.conf'",
-      "sudo bash -c 'echo @sapsys soft nofile 32800 > /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @sapsys hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @oinstall soft nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @oinstall hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
+      "sudo bash -c 'echo search ${var.vcn_dns_label}.oraclevcn.com ${var.database_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_web_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_route_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.bastion_subnet_label}.${var.vcn_dns_label}.oraclevcn.com > /etc/resolv.conf'",
+      "sudo bash -c 'echo nameserver 169.254.169.254 >> /etc/resolv.conf'",
+      "sudo bash -c 'chattr +i /etc/resolv.conf'",
     ]
   }
 }
 
 # Connect to SAP DB instance and resize root partion
 resource "null_resource" "connect_to_sap_db_instance" {
-  depends_on = ["oci_core_volume_attachment.sap_db_block_attach_swap"]
+  depends_on = ["oci_core_volume_attachment.sap_db_block_attach_swap", "null_resource.connect_to_sap_app_instance", "null_resource.connect_to_bastion_instance"]
 
   connection {
     type                = "ssh"
@@ -87,7 +83,7 @@ resource "null_resource" "connect_to_sap_db_instance" {
   }
 
   provisioner "local-exec" {
-    command = "sleep 5"
+    command = "sleep 15"
   }
 
   provisioner "file" {
@@ -103,19 +99,9 @@ resource "null_resource" "connect_to_sap_db_instance" {
       "sudo mkdir ${var.export_path_fss_sap}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
-      "sudo growpart /dev/sda 3",
-      "sudo yum groupinstall 'Server with GUI' -y",
-      "sudo systemctl set-default graphical.target",
-      "sudo yum install uuid libaio-devel ksh gcc -y",
-      "sudo yum install oracle-database-server-12cR2-preinstall -y",
-      "sudo firewall-cmd --zone=public --permanent --add-port=1521/tcp",
-      "sudo firewall-cmd --reload",
-      "sudo bash -c 'echo kernel.sem=1250 256000 100 1024 >> /etc/sysctl.d/sap.conf'",
-      "sudo bash -c 'echo vm.max_map_count=2000000 >> /etc/sysctl.d/sap.conf'",
-      "sudo bash -c 'echo @sapsys soft nofile 32800 > /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @sapsys hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @oinstall soft nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
-      "sudo bash -c 'echo @oinstall hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'",
+      "sudo bash -c 'echo search ${var.vcn_dns_label}.oraclevcn.com ${var.database_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_web_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_route_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.bastion_subnet_label}.${var.vcn_dns_label}.oraclevcn.com > /etc/resolv.conf'",
+      "sudo bash -c 'echo nameserver 169.254.169.254 >> /etc/resolv.conf'",
+      "sudo bash -c 'chattr +i /etc/resolv.conf'",
     ]
   }
 }
@@ -133,11 +119,18 @@ resource "null_resource" "connect_to_sap_web_dispatcher" {
     bastion_private_key = "${var.ssh_private_key}"
   }
 
+  provisioner "file" {
+    source      = "script-sap-disp.sh"
+    destination = "/tmp/script-sap-disp.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "sudo firewall-cmd --zone=public --permanent --add-port=80/tcp",
-      "sudo firewall-cmd --zone=public --permanent --add-port=443/tcp",
-      "sudo firewall-cmd --reload",
+      "chmod +x /tmp/script-sap-disp.sh",
+      "/tmp/script-sap-disp.sh",
+      "sudo bash -c 'echo search ${var.vcn_dns_label}.oraclevcn.com ${var.database_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_web_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_route_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.bastion_subnet_label}.${var.vcn_dns_label}.oraclevcn.com > /etc/resolv.conf'",
+      "sudo bash -c 'echo nameserver 169.254.169.254 >> /etc/resolv.conf'",
+      "sudo bash -c 'chattr +i /etc/resolv.conf'",
     ]
   }
 }
@@ -155,10 +148,18 @@ resource "null_resource" "connect_to_sap_router" {
     bastion_private_key = "${var.ssh_private_key}"
   }
 
+  provisioner "file" {
+    source      = "script-sap-router.sh"
+    destination = "/tmp/script-sap-router.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "sudo firewall-cmd --zone=public --permanent --add-port=3200-3299/tcp",
-      "sudo firewall-cmd --reload",
+      "chmod +x /tmp/script-sap-router.sh",
+      "/tmp/script-sap-router.sh",
+      "sudo bash -c 'echo search ${var.vcn_dns_label}.oraclevcn.com ${var.database_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_web_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.sap_route_subnet_label}.${var.vcn_dns_label}.oraclevcn.com ${var.bastion_subnet_label}.${var.vcn_dns_label}.oraclevcn.com > /etc/resolv.conf'",
+      "sudo bash -c 'echo nameserver 169.254.169.254 >> /etc/resolv.conf'",
+      "sudo bash -c 'chattr +i /etc/resolv.conf'",
     ]
   }
 }

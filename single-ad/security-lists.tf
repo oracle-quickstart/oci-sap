@@ -45,7 +45,7 @@ resource "oci_core_security_list" "BastionSecList" {
       }
 
       protocol = "${local.tcp_protocol}"
-      source   = "${var.vcn_cidr}"
+      source   = "${local.anywhere}"
     },
   ]
 }
