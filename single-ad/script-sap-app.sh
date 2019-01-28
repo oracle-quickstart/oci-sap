@@ -87,4 +87,6 @@ else
        sudo echo "UUID=`sudo blkid /dev/vg_sap/oracle_client | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /oracle/client xfs defaults,_netdev 0 2" >> /etc/fstab
        sudo chmod 600 /etc/fstab
  fi 
-       
+sudo bash -c 'init 3'
+sleep 20
+sudo bash -c 'init 5'

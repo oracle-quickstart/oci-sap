@@ -89,3 +89,6 @@ sudo echo "UUID=`sudo blkid /dev/vg_sap_orcl/lv_mirrorA | cut -d ':'  -f2 | cut 
 sudo echo "UUID=`sudo blkid /dev/vg_sap_orcl/lv_mirrorB | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /oracle/SAPSID/mirrorB xfs defaults,_netdev 0 2" >> /etc/fstab
 sudo echo "UUID=`sudo blkid /dev/vg_sap_orcl/lv_oraarch | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /oracle/SAPSID/oraarch xfs defaults,_netdev 0 2" >> /etc/fstab
 sudo chmod 600 /etc/fstab
+sudo bash -c 'init 3'
+sleep 20
+sudo bash -c 'init 5'

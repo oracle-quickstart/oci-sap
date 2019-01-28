@@ -18,3 +18,6 @@ sudo systemctl start ntpd
 sudo systemctl enable ntpd
 sudo systemctl stop chronyd
 sudo systemctl disable chronyd
+sudo bash -c 'init 3'
+sleep 20
+sudo bash -c 'init 5'
