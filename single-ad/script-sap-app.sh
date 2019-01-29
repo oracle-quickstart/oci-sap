@@ -16,6 +16,7 @@ sudo bash -c 'echo @sapsys soft nofile 32800 > /etc/security/limits.d/99-sap.con
 sudo bash -c 'echo @sapsys hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'
 sudo bash -c 'echo @oinstall soft nofile 32800 >> /etc/security/limits.d/99-sap.conf'
 sudo bash -c 'echo @oinstall hard nofile 32800 >> /etc/security/limits.d/99-sap.conf'
+sudo bash -c 'sed -i -e "s/#- growpart/ - growpart/g" /etc/cloud/cloud.cfg'
 sudo yum -y install ntp
 sudo firewall-cmd --zone=public --permanent --add-port=123/udp
 sudo firewall-cmd --reload

@@ -10,6 +10,7 @@ sudo systemctl daemon-reload
 sudo bash -c 'sed -i -e "s/<USER>/opc/g" /etc/systemd/system/vncserver@:1.service'
 sudo systemctl start vncserver@:1.service
 sudo systemctl enable vncserver@:1.service
+sudo bash -c 'sed -i -e "s/#- growpart/ - growpart/g" /etc/cloud/cloud.cfg'
 sudo yum -y install ntp
 sudo firewall-cmd --zone=public --permanent --add-port=123/udp
 sudo firewall-cmd --reload

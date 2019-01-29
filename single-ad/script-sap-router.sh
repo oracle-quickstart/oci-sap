@@ -7,6 +7,7 @@ sudo firewall-cmd --reload
 sudo ntpdate 169.254.169.254
 sudo bash -c 'sed -i -e "s/server/#server/g" /etc/ntp.conf'
 sudo bash -c 'echo server 169.254.169.254 iburst >> /etc/ntp.conf'
+sudo bash -c 'sed -i -e "s/#- growpart/ - growpart/g" /etc/cloud/cloud.cfg'
 sudo systemctl start ntpd
 sudo systemctl enable ntpd
 sudo systemctl stop chronyd
