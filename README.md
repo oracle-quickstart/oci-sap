@@ -32,6 +32,7 @@ Prerequisites
 First off you'll need to do some pre deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
 
 Secondly, customize the SAP on OCI terraform stack based on your requirements like:
+
 •	Define the compartment where the resources will be created by setting the compartment Terraform Variable
 ### Compartment
 export TF_VAR_compartment_ocid="<compartment OCID>"
