@@ -34,11 +34,12 @@ First off, you'll need to do some pre deploy setup.  That's all detailed [here](
 Secondly, customize the SAP on OCI terraform stack based on your requirements like:
 
 • Define the compartment where the resources will be created by setting the compartment Terraform Variable
+
 export TF_VAR_compartment_ocid="<compartment OCID>"
 
 • Change VNC password (“VNC_PASSWORD_CHANGE_ME) in script-sap-bast.sh file before running the terraform stack
 
-• If needed, open additional firewall Ports in the security-lists.tf file and add an “firewall-cmd” CLI into the script file of the node where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”
+• If needed, open additional firewall Ports in the security-lists.tf file and add a “firewall-cmd” CLI into the script file for the node (i.e.; script-sap-bast.sh) where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”
 
 
 Clone the Module
