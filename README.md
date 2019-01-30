@@ -19,8 +19,9 @@ Terraform Provider for Oracle Cloud Infrastructure
 - [Github issues](https://github.com/terraform-providers/terraform-provider-oci/issues)
 - [Troubleshooting](https://www.terraform.io/docs/providers/oci/guides/guides/troubleshooting.html)
 
-SAP on OCI
+SAP on OCI - Three Tier Architecture
 ==================
+![](./images/sap-on-oci-3tier-arch.png)
 
 These are Terraform modules for deploying a basic Infrastructure to support SAP on Oracle Cloud Infrastructure (OCI):
 
