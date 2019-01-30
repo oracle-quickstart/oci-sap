@@ -82,6 +82,15 @@ resource "oci_core_security_list" "DBSecList" {
       protocol = "${local.tcp_protocol}"
       source   = "${var.vcn_cidr}"
     },
+    {
+      tcp_options {
+        "min" = "${local.sap_dispatcher_min}"
+        "max" = "${local.sap_dispatcher_max}"
+      }
+
+      protocol = "${local.tcp_protocol}"
+      source   = "${var.vcn_cidr}"
+    },
   ]
 }
 

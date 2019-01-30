@@ -245,6 +245,10 @@ variable "export_path_fss_sap" {
   default = "/sapmnt"
 }
 
+variable "export_path_fss_sap_software" {
+  default = "/software"
+}
+
 variable "max_byte" {
   default = 500843202333
 }
