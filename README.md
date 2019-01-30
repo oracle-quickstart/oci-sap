@@ -29,17 +29,16 @@ These are Terraform modules for deploying a basic Infrastructure to support SAP 
   
 Prerequisites
 ---------------------
-First off you'll need to do some pre deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
+First off, you'll need to do some pre deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
 
 Secondly, customize the SAP on OCI terraform stack based on your requirements like:
 
-•	Define the compartment where the resources will be created by setting the compartment Terraform Variable
-### Compartment
+• Define the compartment where the resources will be created by setting the compartment Terraform Variable
 export TF_VAR_compartment_ocid="<compartment OCID>"
 
-•	Change VNC password (“VNC_PASSWORD_CHANGE_ME) in script-sap-bast.sh file before running the terraform stack
+• Change VNC password (“VNC_PASSWORD_CHANGE_ME) in script-sap-bast.sh file before running the terraform stack
 
-•	If needed, open additional firewall Ports in the security-lists.tf file and add an “firewall-cmd” CLI into the script file of the node where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”
+• If needed, open additional firewall Ports in the security-lists.tf file and add an “firewall-cmd” CLI into the script file of the node where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”
 
 
 Clone the Module
