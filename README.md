@@ -41,7 +41,7 @@ export TF_VAR_compartment_ocid="<compartment OCID>"
 
 • If needed, open additional firewall Ports in the security-lists.tf file and add a “firewall-cmd” CLI into the script file for the node (i.e.; script-sap-bast.sh) where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”
 
-• The SAP Ports to be used for the communication between the various components can be found on the following official [SAP Website:](https://help.sap.com/viewer/ports)
+• The SAP Ports to be used for the communication between the various components can be found on the following official [SAP Website](https://help.sap.com/viewer/ports)
 
 • [This document](http://www.oracle.com/us/solutions/sap/sap-netweaver-on-oracle-cloud-wp-3931430.pdf) describes the necessary steps to correctly configure Oracle Cloud Infrastructure Compute for the deployment of an SAP NetWeaver system, how to install an SAP NetWeaver system on Oracle Cloud Infrastructure and provides useful information on how to shift an on-premise SAP NetWeaver environment to Oracle Cloud Infrastructure  and to make an SAP NetWeaver system highly available on Oracle Cloud Infrastructure.
 
