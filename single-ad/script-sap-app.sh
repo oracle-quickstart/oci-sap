@@ -43,20 +43,16 @@ if [ $size -lt $value ]
         sudo pvcreate /dev/sdb1
         sudo vgcreate vg_sap /dev/sdb1
         sudo lvcreate -L 30GB -n usr_sap vg_sap
-        sudo lvcreate -L 20GB -n usr_sap_trans vg_sap
         sudo lvcreate -L 5GB -n oracle_client vg_sap
         sudo mkfs.xfs /dev/vg_sap/usr_sap
-        sudo mkfs.xfs /dev/vg_sap/usr_sap_trans
         sudo mkfs.xfs /dev/vg_sap/oracle_client
         sudo mkdir -p /usr/sap
         sudo mount /dev/vg_sap/usr_sap /usr/sap
         sudo mkdir -p /usr/sap/trans
-        sudo mount /dev/vg_sap/usr_sap_trans /usr/sap/trans
         sudo mkdir -p /oracle/client
         sudo mount /dev/vg_sap/oracle_client /oracle/client
         sudo chmod 777 /etc/fstab
         sudo echo "UUID=`sudo blkid /dev/vg_sap/usr_sap | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /usr/sap xfs defaults,_netdev 0 2" >> /etc/fstab
-        sudo echo "UUID=`sudo blkid /dev/vg_sap/usr_sap_trans | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /usr/sap/trans xfs defaults,_netdev 0 2" >> /etc/fstab
         sudo echo "UUID=`sudo blkid /dev/vg_sap/oracle_client | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /oracle/client xfs defaults,_netdev 0 2" >> /etc/fstab
         sudo chmod 600 /etc/fstab
 else
@@ -71,20 +67,16 @@ else
        sudo pvcreate /dev/sdc1
        sudo vgcreate vg_sap /dev/sdc1
        sudo lvcreate -L 30GB -n usr_sap vg_sap
-       sudo lvcreate -L 20GB -n usr_sap_trans vg_sap
        sudo lvcreate -L 5GB -n oracle_client vg_sap
        sudo mkfs.xfs /dev/vg_sap/usr_sap
-       sudo mkfs.xfs /dev/vg_sap/usr_sap_trans
        sudo mkfs.xfs /dev/vg_sap/oracle_client
        sudo mkdir -p /usr/sap
        sudo mount /dev/vg_sap/usr_sap /usr/sap
        sudo mkdir -p /usr/sap/trans
-       sudo mount /dev/vg_sap/usr_sap_trans /usr/sap/trans
        sudo mkdir -p /oracle/client
        sudo mount /dev/vg_sap/oracle_client /oracle/client
        sudo chmod 777 /etc/fstab
        sudo echo "UUID=`sudo blkid /dev/vg_sap/usr_sap | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /usr/sap xfs defaults,_netdev 0 2" >> /etc/fstab
-       sudo echo "UUID=`sudo blkid /dev/vg_sap/usr_sap_trans | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /usr/sap/trans xfs defaults,_netdev 0 2" >> /etc/fstab
        sudo echo "UUID=`sudo blkid /dev/vg_sap/oracle_client | cut -d ':'  -f2 | cut -d '=' -f2 | cut -d '"' -f2`  /oracle/client xfs defaults,_netdev 0 2" >> /etc/fstab
        sudo chmod 600 /etc/fstab
  fi 
