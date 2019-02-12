@@ -230,7 +230,15 @@ variable "db_linux_boot_volume_size" {
 # FSS Variables
 
 variable "fss_sap_file_system_display_name" {
-  default = "sap_fss"
+  default = "sap_fss_mnt"
+}
+
+variable "fss_sap_software_file_system_display_name" {
+  default = "sap_fss_software"
+}
+
+variable "fss_sap_trans_file_system_display_name" {
+  default = "sap_fss_trans"
 }
 
 variable "fss_sap_mount_target_display_name" {
