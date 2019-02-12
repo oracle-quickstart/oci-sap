@@ -53,7 +53,7 @@ These are Terraform modules for deploying a basic Infrastructure to support SAP 
   
 Prerequisites
 ---------------------
-First off, you'll need to do some pre deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
+First off, you'll need to do some pre-deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
 
 Secondly, customize the SAP on OCI terraform stack based on your requirements like:
 
@@ -64,6 +64,12 @@ export TF_VAR_compartment_ocid="<compartment OCID>"
 • Change VNC password (“VNC_PASSWORD_CHANGE_ME) in script-sap-bast.sh file before running the terraform stack
 
 • If needed, open additional firewall Ports in the security-lists.tf file and add a “firewall-cmd” CLI into the script file for the node (i.e.; script-sap-bast.sh) where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”. The SAP Ports to be used for the communication between the various components can be found on the following official [SAP Website](https://help.sap.com/viewer/ports)
+
+• Update SAPSID in the script-sap-db.sh script file to match your SAP SID
+
+• Boot and Block volumes have a pre-defined size. Update variables.tf with the appropriate size information prior to provisioning the terraform stack
+
+• SWAP file has been set to 96Gb which means SAP DB and APP instances SWAP size is going to be local 8Gb + 96Gb. Update this accordingly
 
 Installation Process
 ---------------------
