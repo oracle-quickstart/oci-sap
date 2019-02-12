@@ -241,6 +241,10 @@ variable "fss_sap_export_set_name" {
   default = "export set for mount target"
 }
 
+variable "export_path_fss_sap_trans" {
+  default = "/trans"
+}
+
 variable "export_path_fss_sap" {
   default = "/sapmnt"
 }

@@ -61,6 +61,7 @@ sudo mkfs.xfs /dev/vg_sap_orcl/lv_mirrorA
 sudo mkfs.xfs /dev/vg_sap_orcl/lv_mirrorB
 sudo mkfs.xfs /dev/vg_sap_orcl/lv_oraarch
 sudo mkdir -p /oracle/client
+sudo mkdir -p /usr/sap/trans
 sudo mount /dev/vg_sap_orcl/lv_orclient /oracle/client
 sudo mkdir -p /oracle/SAPSID
 sudo mount /dev/vg_sap_orcl/lv_oracle /oracle/SAPSID

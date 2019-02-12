@@ -31,12 +31,6 @@ resource "oci_file_storage_export" "export_fss_sap_mnt" {
       require_privileged_source_port = true
     },
     {
-      source                         = "${var.bastion_subnet_cidr_block}"
-      access                         = "READ_WRITE"
-      identity_squash                = "NONE"
-      require_privileged_source_port = true
-    },
-    {
       source                         = "${var.database_subnet_cidr_block}"
       access                         = "READ_WRITE"
       identity_squash                = "NONE"
@@ -71,6 +65,33 @@ resource "oci_file_storage_export" "export_fss_sap_software" {
     },
     {
       source                         = "${var.sap_route_subnet_cidr_block}"
+      access                         = "READ_WRITE"
+      identity_squash                = "NONE"
+      require_privileged_source_port = true
+    },
+    {
+      source                         = "${var.sap_web_subnet_cidr_block}"
+      access                         = "READ_WRITE"
+      identity_squash                = "NONE"
+      require_privileged_source_port = true
+    },
+  ]
+}
+
+resource "oci_file_storage_export" "export_fss_sap_trans" {
+  export_set_id  = "${oci_file_storage_export_set.fss_sap_export_set.id}"
+  file_system_id = "${oci_file_storage_file_system.fss_sap_file_system.id}"
+  path           = "${var.export_path_fss_sap_trans}"
+
+  export_options = [
+    {
+      source                         = "${var.sap_subnet_cidr_block}"
+      access                         = "READ_WRITE"
+      identity_squash                = "NONE"
+      require_privileged_source_port = true
+    },
+    {
+      source                         = "${var.database_subnet_cidr_block}"
       access                         = "READ_WRITE"
       identity_squash                = "NONE"
       require_privileged_source_port = true
