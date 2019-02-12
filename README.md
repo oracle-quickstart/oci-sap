@@ -69,7 +69,7 @@ export TF_VAR_compartment_ocid="<compartment OCID>"
 
 • Boot and Block volumes have a pre-defined size. Update variables.tf with the appropriate size information prior to provisioning the terraform stack
 
-• SWAP file has been set to 96Gb which means SAP DB and APP instances SWAP size is going to be local 8Gb + 96Gb. Update this accordingly
+• SWAP file has been set to 96Gb which means SAP DB and APP instances SWAP size is going to be local 8Gb partition + 96Gb swap file. Update this accordingly
 
 Installation Process
 ---------------------
