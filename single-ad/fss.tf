@@ -1,14 +1,26 @@
+resource "oci_file_storage_mount_target" "fss_sap_mount_target" {
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+  compartment_id      = "${var.compartment_ocid}"
+  subnet_id           = "${oci_core_subnet.fss_private_subnets.id}"
+  display_name        = "${var.fss_sap_mount_target_display_name}"
+}
+
 resource "oci_file_storage_file_system" "fss_sap_file_system" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
   display_name        = "${var.fss_sap_file_system_display_name}"
 }
 
-resource "oci_file_storage_mount_target" "fss_sap_mount_target" {
+resource "oci_file_storage_file_system" "fss_sap_software_file_system" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
-  subnet_id           = "${oci_core_subnet.fss_private_subnets.id}"
-  display_name        = "${var.fss_sap_mount_target_display_name}"
+  display_name        = "${var.fss_sap_software_file_system_display_name}"
+}
+
+resource "oci_file_storage_file_system" "fss_sap_trans_file_system" {
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+  compartment_id      = "${var.compartment_ocid}"
+  display_name        = "${var.fss_sap_trans_file_system_display_name}"
 }
 
 resource "oci_file_storage_export_set" "fss_sap_export_set" {
@@ -41,7 +53,7 @@ resource "oci_file_storage_export" "export_fss_sap_mnt" {
 
 resource "oci_file_storage_export" "export_fss_sap_software" {
   export_set_id  = "${oci_file_storage_export_set.fss_sap_export_set.id}"
-  file_system_id = "${oci_file_storage_file_system.fss_sap_file_system.id}"
+  file_system_id = "${oci_file_storage_file_system.fss_sap_software_file_system.id}"
   path           = "${var.export_path_fss_sap_software}"
 
   export_options = [
@@ -80,7 +92,7 @@ resource "oci_file_storage_export" "export_fss_sap_software" {
 
 resource "oci_file_storage_export" "export_fss_sap_trans" {
   export_set_id  = "${oci_file_storage_export_set.fss_sap_export_set.id}"
-  file_system_id = "${oci_file_storage_file_system.fss_sap_file_system.id}"
+  file_system_id = "${oci_file_storage_file_system.fss_sap_trans_file_system.id}"
   path           = "${var.export_path_fss_sap_trans}"
 
   export_options = [
