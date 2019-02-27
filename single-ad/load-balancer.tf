@@ -18,10 +18,10 @@ resource "oci_load_balancer_backend_set" "lb_backend_set" {
   policy           = "ROUND_ROBIN"
 
   health_checker {
-    port                = "80"
+    port                = "44300"
     protocol            = "HTTP"
     response_body_regex = ".*"
-    url_path            = "/"
+    url_path            = "/sap/wdisp/admin/public/default.html"
   }
 
   provisioner "local-exec" {

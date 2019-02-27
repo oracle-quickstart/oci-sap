@@ -43,6 +43,12 @@ resource "oci_file_storage_export" "export_fss_sap_mnt" {
       require_privileged_source_port = true
     },
     {
+      source                         = "${var.sap_web_subnet_cidr_block}"
+      access                         = "READ_WRITE"
+      identity_squash                = "NONE"
+      require_privileged_source_port = true
+    },
+    {
       source                         = "${var.database_subnet_cidr_block}"
       access                         = "READ_WRITE"
       identity_squash                = "NONE"
