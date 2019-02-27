@@ -9,7 +9,7 @@ locals {
   fss_ports          = ["2048", "2050", "111"]
   sap_dispatcher_min = "3200"
   sap_dispatcher_max = "3299"
-  http_port          = "80"
+  http_port          = "44300"
   https_port         = "443"
   vnc_port_min       = "5900"
   vnc_port_max       = "5902"
@@ -278,8 +278,8 @@ resource "oci_core_security_list" "LB_SecList" {
       source   = "0.0.0.0/0"
 
       tcp_options {
-        "min" = 80
-        "max" = 80
+        "min" = 44300
+        "max" = 44300
       }
     },
   ]
