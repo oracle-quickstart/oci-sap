@@ -1,18 +1,4 @@
-##Copyright © 2019, Oracle and/or its affiliates. All rights reserved. The Universal Permissive License (UPL), Version 1.0
-
-
-    #     ___  ____     _    ____ _     _____
-    #    / _ \|  _ \   / \  / ___| |   | ____|
-    #   | | | | |_) | / _ \| |   | |   |  _|
-    #   | |_| |  _ < / ___ | |___| |___| |___
-    #    \___/|_| \_/_/   \_\____|_____|_____|
-***
-
-## NOTICE  
-**The OCI Terraform Provider is now available for automatic download through the Terraform Provider Registry. 
-For more information on how to get started view the [documentation](https://www.terraform.io/docs/providers/oci/index.html) 
-and [setup guide](https://www.terraform.io/docs/providers/oci/guides/version-3-upgrade.html).**
-
+# oci-sap
 
 Terraform Provider for Oracle Cloud Infrastructure
 ==================
@@ -53,7 +39,7 @@ SAP on OCI - Three Tier Architecture
 These are Terraform modules for deploying a basic Infrastructure to support SAP on Oracle Cloud Infrastructure (OCI):
 
 * [single-ad](single-ad) deploys all infrastructure on a single availability domain. This is a good fit for people who want to explore SAP on OCI.
-  
+
 Prerequisites
 ---------------------
 First off, you'll need to do some pre-deploy setup.  That's all detailed [here](https://github.com/cloud-partners/oci-prerequisites).
