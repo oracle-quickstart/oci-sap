@@ -1,3 +1,6 @@
+##Copyright © 2019, Oracle and/or its affiliates. All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
+
     #     ___  ____     _    ____ _     _____
     #    / _ \|  _ \   / \  / ___| |   | ____|
     #   | | | | |_) | / _ \| |   | |   |  _|
@@ -59,7 +62,7 @@ Secondly, customize the SAP on OCI terraform stack based on your requirements li
 
 • Define the compartment where the resources will be created by setting the compartment Terraform Variable
 
-export TF_VAR_compartment_ocid ="<compartment OCID>"
+export TF_VAR_compartment_ocid="<compartment OCID>"
 
 • Change VNC password (“VNC_PASSWORD_CHANGE_ME) in script-sap-bast.sh file before running the terraform stack
 

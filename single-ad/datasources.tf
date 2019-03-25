@@ -1,3 +1,6 @@
+## Copyright © 2019, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
 # Get list of Availability Domains
 data "oci_identity_availability_domains" "ADs" {
   compartment_id = "${var.tenancy_ocid}"

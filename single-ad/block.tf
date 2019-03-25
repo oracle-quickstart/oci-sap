@@ -1,3 +1,6 @@
+## Copyright © 2019, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
 # Block Volume for SAP Linux App Tier
 resource "oci_core_volume" "sap_app_block" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"

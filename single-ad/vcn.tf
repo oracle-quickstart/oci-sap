@@ -1,3 +1,6 @@
+## Copyright © 2019, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
 # Virtual Cloud Network (VCN)
 resource "oci_core_virtual_network" "vcn" {
   compartment_id = "${var.compartment_ocid}"

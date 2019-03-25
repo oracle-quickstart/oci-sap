@@ -1,3 +1,6 @@
+## Copyright © 2019, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
 resource "oci_file_storage_mount_target" "fss_sap_mount_target" {
   availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"

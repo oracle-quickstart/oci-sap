@@ -1,3 +1,6 @@
+## Copyright © 2019, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+
 # Bastion Linux Instances
 
 resource "oci_core_instance" "bastion_linux_instances" {
