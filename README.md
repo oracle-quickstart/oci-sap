@@ -1,7 +1,6 @@
 # oci-sap
 
 Terraform Provider for Oracle Cloud Infrastructure
-==================
 
 - [Documentation](https://www.terraform.io/docs/providers/oci/index.html)
 - [OCI forums](https://cloudcustomerconnect.oracle.com/resources/9c8fa8f96f/summary)
