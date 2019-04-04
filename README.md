@@ -41,7 +41,7 @@ Secondly, customize the SAP on OCI terraform stack based on your requirements li
 
     export TF_VAR_compartment_ocid="<compartment OCID>"
 
-* Bastion Server VNC Password will be set to "Display Name" as initial Password
+* Bastion Server VNC Password will use the instance "Display Name" as the initial Password
 * If needed, open additional firewall Ports in the security-lists.tf file and add a “firewall-cmd” CLI into the script file for the node (i.e.; script-sap-bast.sh) where that port needs to be accessible (i.e.; “sudo firewall-cmd --zone=public --permanent --add-port=80/tcp”. The SAP Ports to be used for the communication between the various components can be found on the following official [SAP Website](https://help.sap.com/viewer/ports)
 * Update SAPSID in the script-sap-db.sh script file to match your SAP SID
 * Boot and Block volumes have a pre-defined size. Update variables.tf with the appropriate size information prior to provisioning the terraform stack
