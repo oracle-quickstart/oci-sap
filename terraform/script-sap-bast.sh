@@ -33,7 +33,7 @@ sudo systemctl stop chronyd
 sudo systemctl disable chronyd
 
 # Setting up VNC password. Make sure you CHANGE IT!
-sudo bash -c 'echo "VNC_PASSWORD_CHANGE_ME" | vncpasswd -f >> /home/opc/.vnc/passwd'
+sudo bash -c 'curl -L http://169.254.169.254/opc/v1/instance/displayName | vncpasswd -f >> /home/opc/.vnc/passwd'
 sudo bash -c 'chown -R opc.opc /home/opc/.vnc/'
 sudo bash -c 'chmod 600 /home/opc/.vnc/passwd'
 
