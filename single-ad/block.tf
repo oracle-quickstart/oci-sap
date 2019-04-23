@@ -1,5 +1,5 @@
 ## Copyright © 2019, Oracle and/or its affiliates. 
-## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 # Block Volume for SAP Linux App Tier
 resource "oci_core_volume" "sap_app_block" {
