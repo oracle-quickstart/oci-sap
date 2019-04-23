@@ -1,5 +1,5 @@
 ## Copyright © 2019, Oracle and/or its affiliates. 
-## All rights reserved. The Universal Permissive License (UPL), Version 1.0
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 export TF_VAR_tenancy_ocid="<tenancy_ocid>"
 export TF_VAR_user_ocid="<user_ocid>"
