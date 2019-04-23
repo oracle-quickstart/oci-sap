@@ -1,5 +1,3 @@
-##Copyright © 2019, Oracle and/or its affiliates. All rights reserved. The Universal Permissive License (UPL), Version 1.0
-
 ## NOTICE  
 **The OCI Terraform Provider is now available for automatic download through the Terraform Provider Registry. 
 For more information on how to get started view the [documentation](https://www.terraform.io/docs/providers/oci/index.html) 
@@ -54,7 +52,7 @@ Secondly, customize the SAP on OCI terraform stack based on your requirements li
 
 • Define the compartment where the resources will be created by setting the compartment Terraform Variable
 
-   export TF_VAR_compartment_ocid="<compartment OCID>"
+`export TF_VAR_compartment_ocid="<compartment OCID>"`
 
 • Bastion Server VNC Password will use the instance "Display Name" as the initial Password
 
