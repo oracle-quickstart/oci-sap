@@ -8,7 +8,7 @@ resource "null_resource" "connect_to_bastion_instance" {
     timeout     = "40m"
     host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     user        = "opc"
-    private_key = "${var.ssh_private_key}"
+    private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "file" {
@@ -37,10 +37,10 @@ resource "null_resource" "connect_to_sap_app_instance" {
     timeout             = "40m"
     host                = "${oci_core_instance.sap_linux_instances.private_ip}"
     user                = "opc"
-    private_key         = "${var.ssh_private_key}"
+    private_key         = "${chomp(file(var.ssh_private_key))}"
     bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     bastion_user        = "opc"
-    bastion_private_key = "${var.ssh_private_key}"
+    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "local-exec" {
@@ -82,10 +82,10 @@ resource "null_resource" "connect_to_sap_db_instance" {
     timeout             = "40m"
     host                = "${oci_core_instance.db_linux_instances.private_ip}"
     user                = "opc"
-    private_key         = "${var.ssh_private_key}"
+    private_key         = "${chomp(file(var.ssh_private_key))}"
     bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     bastion_user        = "opc"
-    bastion_private_key = "${var.ssh_private_key}"
+    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "local-exec" {
@@ -125,10 +125,10 @@ resource "null_resource" "connect_to_sap_web_dispatcher" {
     timeout             = "40m"
     host                = "${oci_core_instance.sap_web_dis_instances.private_ip}"
     user                = "opc"
-    private_key         = "${var.ssh_private_key}"
+    private_key         = "${chomp(file(var.ssh_private_key))}"
     bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     bastion_user        = "opc"
-    bastion_private_key = "${var.ssh_private_key}"
+    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "file" {
@@ -167,10 +167,10 @@ resource "null_resource" "connect_to_sap_router" {
     timeout             = "40m"
     host                = "${oci_core_instance.sap_router_instances.private_ip}"
     user                = "opc"
-    private_key         = "${var.ssh_private_key}"
+    private_key         = "${chomp(file(var.ssh_private_key))}"
     bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     bastion_user        = "opc"
-    bastion_private_key = "${var.ssh_private_key}"
+    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "file" {

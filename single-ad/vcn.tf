@@ -93,7 +93,6 @@ resource "oci_core_route_table" "FSS_PrivateRT" {
 
 # Bastion Host Public Subnet
 resource "oci_core_subnet" "bastion_public_subnets" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.vcn.id}"
   cidr_block          = "${var.bastion_subnet_cidr_block}"
@@ -109,7 +108,6 @@ resource "oci_core_subnet" "bastion_public_subnets" {
 
 # SAP Web Dispatcher Public Subnet
 resource "oci_core_subnet" "sap_web_public_subnets" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.vcn.id}"
   cidr_block          = "${var.sap_web_subnet_cidr_block}"
@@ -125,7 +123,6 @@ resource "oci_core_subnet" "sap_web_public_subnets" {
 
 # SAP Router Private Subnet
 resource "oci_core_subnet" "sap_route_private_subnets" {
-  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id             = "${var.compartment_ocid}"
   vcn_id                     = "${oci_core_virtual_network.vcn.id}"
   cidr_block                 = "${var.sap_route_subnet_cidr_block}"
@@ -142,7 +139,6 @@ resource "oci_core_subnet" "sap_route_private_subnets" {
 
 # SAP Application Private Subnet
 resource "oci_core_subnet" "sap_private_subnets" {
-  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id             = "${var.compartment_ocid}"
   vcn_id                     = "${oci_core_virtual_network.vcn.id}"
   cidr_block                 = "${var.sap_subnet_cidr_block}"
@@ -159,7 +155,6 @@ resource "oci_core_subnet" "sap_private_subnets" {
 
 # Database Private Subnet
 resource "oci_core_subnet" "db_private_subnets" {
-  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id             = "${var.compartment_ocid}"
   vcn_id                     = "${oci_core_virtual_network.vcn.id}"
   cidr_block                 = "${var.database_subnet_cidr_block}"
@@ -176,7 +171,6 @@ resource "oci_core_subnet" "db_private_subnets" {
 
 # FSS Private Subnet
 resource "oci_core_subnet" "fss_private_subnets" {
-  availability_domain        = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
   compartment_id             = "${var.compartment_ocid}"
   vcn_id                     = "${oci_core_virtual_network.vcn.id}"
   cidr_block                 = "${var.fss_subnet_cidr_block}"
@@ -192,28 +186,12 @@ resource "oci_core_subnet" "fss_private_subnets" {
 }
 
 # Load Balancer Subnets
-resource "oci_core_subnet" "lb_subnet1" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -1],"name")}"
+resource "oci_core_subnet" "lb_subnet" {
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.vcn.id}"
-  cidr_block          = "${var.lb_subnet1_cidr_block}"
-  display_name        = "${var.lb_subnet1_label}"
-  dns_label           = "${var.lb_subnet1_label}"
-  route_table_id      = "${oci_core_route_table.PublicRT.id}"
-  security_list_ids   = ["${oci_core_security_list.LB_SecList.id}"]
-
-  provisioner "local-exec" {
-    command = "sleep 5"
-  }
-}
-
-resource "oci_core_subnet" "lb_subnet2" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.AD -0],"name")}"
-  compartment_id      = "${var.compartment_ocid}"
-  vcn_id              = "${oci_core_virtual_network.vcn.id}"
-  cidr_block          = "${var.lb_subnet2_cidr_block}"
-  display_name        = "${var.lb_subnet2_label}"
-  dns_label           = "${var.lb_subnet2_label}"
+  cidr_block          = "${var.lb_subnet_cidr_block}"
+  display_name        = "${var.lb_subnet_label}"
+  dns_label           = "${var.lb_subnet_label}"
   route_table_id      = "${oci_core_route_table.PublicRT.id}"
   security_list_ids   = ["${oci_core_security_list.LB_SecList.id}"]
 
