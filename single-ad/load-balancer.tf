@@ -8,8 +8,7 @@ resource "oci_load_balancer" "load_balancer" {
   compartment_id = "${var.compartment_ocid}"
 
   subnet_ids = [
-    "${oci_core_subnet.lb_subnet1.id}",
-    "${oci_core_subnet.lb_subnet2.id}",
+    "${oci_core_subnet.lb_subnet.id}",
   ]
 
   display_name = "${var.lb_display_name}"

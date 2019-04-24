@@ -50,10 +50,10 @@ resource "oci_core_volume_attachment" "sap_db_block_attach_swap" {
     timeout             = "40m"
     host                = "${oci_core_instance.db_linux_instances.private_ip}"
     user                = "opc"
-    private_key         = "${var.ssh_private_key}"
+    private_key         = "${chomp(file(var.ssh_private_key))}"
     bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
     bastion_user        = "opc"
-    bastion_private_key = "${var.ssh_private_key}"
+    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
   }
 
   provisioner "remote-exec" {

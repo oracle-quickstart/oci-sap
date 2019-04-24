@@ -85,20 +85,12 @@ variable "fss_subnet_label" {
 }
 
 # Load Balancer Private Subnet 
-variable "lb_subnet1_cidr_block" {
+variable "lb_subnet_cidr_block" {
   default = "10.0.7.0/24"
 }
 
-variable "lb_subnet1_label" {
-  default = "lbsubnet1"
-}
-
-variable "lb_subnet2_cidr_block" {
-  default = "10.0.8.0/24"
-}
-
-variable "lb_subnet2_label" {
-  default = "lbsubnet2"
+variable "lb_subnet_label" {
+  default = "lbsubnet"
 }
 
 # Load Balancer Shape

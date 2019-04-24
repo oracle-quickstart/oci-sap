@@ -16,8 +16,8 @@ Clone the Module
 ---------------------
 Now, you'll want a local copy of this repo. You can make that with the commands:
 
-    git clone https://github.com/cloud-partners/oci-sap.git
-    cd oci-sap
+    git clone https://github.com/oracle/oci-sap-dev.git
+    cd oci-sap-dev
     ls
 
 Deploy
@@ -50,9 +50,9 @@ First off, you'll need to do some pre-deploy setup.  That's all detailed [here](
 
 Secondly, customize the SAP on OCI terraform stack based on your requirements like:
 
-• Define the compartment where the resources will be created by setting the compartment Terraform Variable
+• Define the compartment where the resources will be created by setting the compartment_ocid into terraform.tfvars file
 
-`export TF_VAR_compartment_ocid="<compartment OCID>"`
+`compartment_ocid ="<compartment OCID>"`
 
 • Bastion Server VNC Password will use the instance "Display Name" as the initial Password
 
