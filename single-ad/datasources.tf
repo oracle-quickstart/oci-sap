@@ -8,7 +8,7 @@ data "oci_identity_availability_domains" "ADs" {
 
 # Get latest Oracle Linux image
 data "oci_core_images" "InstanceImageOCID" {
-  compartment_id           = "${var.tenancy_ocid}"
+  compartment_id           = "${var.compartment_ocid}"
   operating_system         = "${var.instance_os}"
   operating_system_version = "${var.linux_os_version}"
 
@@ -17,13 +17,6 @@ data "oci_core_images" "InstanceImageOCID" {
     values = ["^.*Oracle[^G]*$"]
     regex  = true
   }
-}
-
-# Get Windows image
-data "oci_core_images" "WinInstanceImageOCID" {
-  compartment_id           = "${var.tenancy_ocid}"
-  operating_system         = "${var.WinInstanceOS}"
-  operating_system_version = "${var.WinInstanceOSVersion}"
 }
 
 # Get swift object storage name for Service Gateway
