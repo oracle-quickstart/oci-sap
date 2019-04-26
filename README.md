@@ -38,7 +38,7 @@ When you no longer need the deployment, you can run this command to destroy it:
 
 SAP on OCI - Three Tier Architecture
 ==================
-![](./images/sap-on-oci-3tier-arch.png)
+![](./images/sap-on-oci-3tier-arch-V2.png)
 
 These are Terraform modules for deploying a basic Infrastructure to support SAP on Oracle Cloud Infrastructure (OCI):
 
