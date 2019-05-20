@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Copyright (c) 2019 Oracle and/or its affiliates.  All rights reserved.
 
 The Universal Permissive License (UPL), Version 1.0
@@ -30,25 +31,31 @@ IN THE SOFTWARE.
 Apache License
 Version 2.0, January 2004
 http://www.apache.org/licenses/
+=======
+Copyright (c) 2019 Oracle and/or its affiliates.  All rights reserved.
+>>>>>>> oci-sap/master
 
-TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+The Universal Permissive License (UPL), Version 1.0
 
-1. Definitions.
+Subject to the condition set forth below, permission is hereby granted to any person obtaining a copy of this
+software, associated documentation and/or data (collectively the "Software"), free of charge and under any and
+all copyright rights in the Software, and any and all patent rights owned or freely licensable by each licensor
+hereunder covering either (i) the unmodified Software as contributed to or provided by such licensor, or
+(ii) the Larger Works (as defined below), to deal in both
 
-"License" shall mean the terms and conditions for use, reproduction,
-and distribution as defined by Sections 1 through 9 of this document.
+(a) the Software, and
+(b) any piece of software and/or hardware listed in the lrgrwrks.txt file if one is included with the Software
+(each a “Larger Work” to which the Software is contributed by such licensors),
 
-"Licensor" shall mean the copyright owner or entity authorized by
-the copyright owner that is granting the License.
+without restriction, including without limitation the rights to copy, create derivative works of, display,
+perform, and distribute the Software and make, use, sell, offer for sale, import, export, have made, and have
+sold the Software and the Larger Work(s), and to sublicense the foregoing rights on either these or other terms.
 
-"Legal Entity" shall mean the union of the acting entity and all
-other entities that control, are controlled by, or are under common
-control with that entity. For the purposes of this definition,
-"control" means (i) the power, direct or indirect, to cause the
-direction or management of such entity, whether by contract or
-otherwise, or (ii) ownership of fifty percent (50%) or more of the
-outstanding shares, or (iii) beneficial ownership of such entity.
+This license is subject to the following condition:
+The above copyright notice and either this complete permission notice or at a minimum a reference to the UPL must
+be included in all copies or substantial portions of the Software.
 
+<<<<<<< HEAD
 "You" (or "Your") shall mean an individual or Legal Entity
 exercising permissions granted by this License.
 
@@ -228,4 +235,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+>>>>>>> oci-sap/master
+=======
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
 >>>>>>> oci-sap/master
