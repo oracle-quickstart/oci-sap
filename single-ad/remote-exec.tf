@@ -6,9 +6,9 @@ resource "null_resource" "connect_to_bastion_instance" {
   connection {
     type        = "ssh"
     timeout     = "40m"
-    host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
+    host        = oci_core_instance.bastion_linux_instances.public_ip
     user        = "opc"
-    private_key = "${chomp(file(var.ssh_private_key))}"
+    private_key = chomp(file(var.ssh_private_key))
   }
 
   provisioner "file" {
@@ -30,17 +30,21 @@ resource "null_resource" "connect_to_bastion_instance" {
 
 # Connect to SAP APP instance mount FSS and resize root partion
 resource "null_resource" "connect_to_sap_app_instance" {
-  depends_on = ["oci_core_volume_attachment.sap_app_block_attach", "oci_core_volume_attachment.sap_app_block_attach_swap", "null_resource.connect_to_bastion_instance"]
+  depends_on = [
+    oci_core_volume_attachment.sap_app_block_attach,
+    oci_core_volume_attachment.sap_app_block_attach_swap,
+    null_resource.connect_to_bastion_instance,
+  ]
 
   connection {
     type                = "ssh"
     timeout             = "40m"
-    host                = "${oci_core_instance.sap_linux_instances.private_ip}"
+    host                = oci_core_instance.sap_linux_instances.private_ip
     user                = "opc"
-    private_key         = "${chomp(file(var.ssh_private_key))}"
-    bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
+    private_key         = chomp(file(var.ssh_private_key))
+    bastion_host        = oci_core_instance.bastion_linux_instances.public_ip
     bastion_user        = "opc"
-    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
+    bastion_private_key = chomp(file(var.ssh_private_key))
   }
 
   provisioner "local-exec" {
@@ -75,17 +79,21 @@ resource "null_resource" "connect_to_sap_app_instance" {
 
 # Connect to SAP DB instance and resize root partion
 resource "null_resource" "connect_to_sap_db_instance" {
-  depends_on = ["oci_core_volume_attachment.sap_db_block_attach_swap", "null_resource.connect_to_sap_app_instance", "null_resource.connect_to_bastion_instance"]
+  depends_on = [
+    oci_core_volume_attachment.sap_db_block_attach_swap,
+    null_resource.connect_to_sap_app_instance,
+    null_resource.connect_to_bastion_instance,
+  ]
 
   connection {
     type                = "ssh"
     timeout             = "40m"
-    host                = "${oci_core_instance.db_linux_instances.private_ip}"
+    host                = oci_core_instance.db_linux_instances.private_ip
     user                = "opc"
-    private_key         = "${chomp(file(var.ssh_private_key))}"
-    bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
+    private_key         = chomp(file(var.ssh_private_key))
+    bastion_host        = oci_core_instance.bastion_linux_instances.public_ip
     bastion_user        = "opc"
-    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
+    bastion_private_key = chomp(file(var.ssh_private_key))
   }
 
   provisioner "local-exec" {
@@ -123,12 +131,12 @@ resource "null_resource" "connect_to_sap_web_dispatcher" {
   connection {
     type                = "ssh"
     timeout             = "40m"
-    host                = "${oci_core_instance.sap_web_dis_instances.private_ip}"
+    host                = oci_core_instance.sap_web_dis_instances.private_ip
     user                = "opc"
-    private_key         = "${chomp(file(var.ssh_private_key))}"
-    bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
+    private_key         = chomp(file(var.ssh_private_key))
+    bastion_host        = oci_core_instance.bastion_linux_instances.public_ip
     bastion_user        = "opc"
-    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
+    bastion_private_key = chomp(file(var.ssh_private_key))
   }
 
   provisioner "file" {
@@ -143,13 +151,9 @@ resource "null_resource" "connect_to_sap_web_dispatcher" {
       "sudo mkdir ${var.export_path_fss_sap_software}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap_software} ${var.export_path_fss_sap_software}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap_software} ${var.export_path_fss_sap_software} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
-
-      
       "sudo mkdir ${var.export_path_fss_sap}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap} ${var.export_path_fss_sap} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
-
-
       "sudo mkdir -p /usr/sap${var.export_path_fss_sap_trans}",
       "sudo mount ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap_trans} /usr/sap${var.export_path_fss_sap_trans}",
       "echo ${local.sap_fss_mount_target_ip_address}:${var.export_path_fss_sap_trans} /usr/sap${var.export_path_fss_sap_trans} nfs tcp,vers=3 | sudo tee -a /etc/fstab",
@@ -165,12 +169,12 @@ resource "null_resource" "connect_to_sap_router" {
   connection {
     type                = "ssh"
     timeout             = "40m"
-    host                = "${oci_core_instance.sap_router_instances.private_ip}"
+    host                = oci_core_instance.sap_router_instances.private_ip
     user                = "opc"
-    private_key         = "${chomp(file(var.ssh_private_key))}"
-    bastion_host        = "${oci_core_instance.bastion_linux_instances.public_ip}"
+    private_key         = chomp(file(var.ssh_private_key))
+    bastion_host        = oci_core_instance.bastion_linux_instances.public_ip
     bastion_user        = "opc"
-    bastion_private_key = "${chomp(file(var.ssh_private_key))}"
+    bastion_private_key = chomp(file(var.ssh_private_key))
   }
 
   provisioner "file" {
@@ -191,3 +195,4 @@ resource "null_resource" "connect_to_sap_router" {
     ]
   }
 }
+

@@ -3,14 +3,14 @@
 
 # Get list of Availability Domains
 data "oci_identity_availability_domains" "ADs" {
-  compartment_id = "${var.tenancy_ocid}"
+  compartment_id = var.tenancy_ocid
 }
 
 # Get latest Oracle Linux image
 data "oci_core_images" "InstanceImageOCID" {
-  compartment_id           = "${var.compartment_ocid}"
-  operating_system         = "${var.instance_os}"
-  operating_system_version = "${var.linux_os_version}"
+  compartment_id           = var.compartment_ocid
+  operating_system         = var.instance_os
+  operating_system_version = var.linux_os_version
 
   filter {
     name   = "display_name"
@@ -29,11 +29,12 @@ data "oci_core_services" "svcgtw_services" {
 }
 
 ## Get FSS Private IP
-data "oci_core_private_ips" ip_sap_fss_mount_target {
-  subnet_id = "${oci_file_storage_mount_target.fss_sap_mount_target.subnet_id}"
+data "oci_core_private_ips" "ip_sap_fss_mount_target" {
+  subnet_id = oci_file_storage_mount_target.fss_sap_mount_target.subnet_id
 
   filter {
     name   = "id"
-    values = ["${oci_file_storage_mount_target.fss_sap_mount_target.private_ip_ids.0}"]
+    values = [oci_file_storage_mount_target.fss_sap_mount_target.private_ip_ids[0]]
   }
 }
+

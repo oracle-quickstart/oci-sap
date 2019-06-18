@@ -4,19 +4,19 @@
 /* Load Balancer */
 
 resource "oci_load_balancer" "load_balancer" {
-  shape          = "${var.lb_shape}"
-  compartment_id = "${var.compartment_ocid}"
+  shape          = var.lb_shape
+  compartment_id = var.compartment_ocid
 
   subnet_ids = [
-    "${oci_core_subnet.lb_subnet.id}",
+    oci_core_subnet.lb_subnet.id,
   ]
 
-  display_name = "${var.lb_display_name}"
+  display_name = var.lb_display_name
 }
 
 resource "oci_load_balancer_backend_set" "lb_backend_set" {
-  name             = "${var.lb_backend_set_name}"
-  load_balancer_id = "${oci_load_balancer.load_balancer.id}"
+  name             = var.lb_backend_set_name
+  load_balancer_id = oci_load_balancer.load_balancer.id
   policy           = "ROUND_ROBIN"
 
   health_checker {
@@ -32,9 +32,9 @@ resource "oci_load_balancer_backend_set" "lb_backend_set" {
 }
 
 resource "oci_load_balancer_listener" "lb_listener" {
-  load_balancer_id         = "${oci_load_balancer.load_balancer.id}"
-  name                     = "${var.lb_backend_listener_name}"
-  default_backend_set_name = "${oci_load_balancer_backend_set.lb_backend_set.name}"
+  load_balancer_id         = oci_load_balancer.load_balancer.id
+  name                     = var.lb_backend_listener_name
+  default_backend_set_name = oci_load_balancer_backend_set.lb_backend_set.name
   port                     = 80
   protocol                 = "HTTP"
 
@@ -48,9 +48,9 @@ resource "oci_load_balancer_listener" "lb_listener" {
 }
 
 resource "oci_load_balancer_backend" "lb_backend" {
-  load_balancer_id = "${oci_load_balancer.load_balancer.id}"
-  backendset_name  = "${oci_load_balancer_backend_set.lb_backend_set.name}"
-  ip_address       = "${oci_core_instance.sap_web_dis_instances.private_ip}"
+  load_balancer_id = oci_load_balancer.load_balancer.id
+  backendset_name  = oci_load_balancer_backend_set.lb_backend_set.name
+  ip_address       = oci_core_instance.sap_web_dis_instances.private_ip
   port             = 80
   backup           = false
   drain            = false
@@ -61,3 +61,4 @@ resource "oci_load_balancer_backend" "lb_backend" {
     command = "sleep 5"
   }
 }
+

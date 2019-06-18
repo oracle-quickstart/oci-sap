@@ -1,14 +1,29 @@
 ## Copyright © 2019, Oracle and/or its affiliates. 
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 https://oss.oracle.com/licenses/upl/#_How_should_I
 
-variable "tenancy_ocid" {}
-variable "user_ocid" {}
-variable "fingerprint" {}
-variable "private_key_path" {}
-variable "region" {}
-variable "ssh_public_key" {}
-variable "ssh_private_key" {}
-variable "compartment_ocid" {}
+variable "tenancy_ocid" {
+}
+
+variable "user_ocid" {
+}
+
+variable "fingerprint" {
+}
+
+variable "private_key_path" {
+}
+
+variable "region" {
+}
+
+variable "ssh_public_key" {
+}
+
+variable "ssh_private_key" {
+}
+
+variable "compartment_ocid" {
+}
 
 variable "AD" {
   description = "Pick up the AD you want to deploy"
@@ -265,7 +280,7 @@ variable "max_files" {
 }
 
 locals {
-  sap_fss_mount_target_ip_address = "${lookup(data.oci_core_private_ips.ip_sap_fss_mount_target.private_ips[0], "ip_address")}"
+  sap_fss_mount_target_ip_address = data.oci_core_private_ips.ip_sap_fss_mount_target.private_ips[0]["ip_address"]
 }
 
 # SAP App Block and Swap Volumes
@@ -295,3 +310,4 @@ variable "sap_db_block_swap_display_name" {
 variable "sap_swap_db_bv_size" {
   default = "96"
 }
+
