@@ -18,8 +18,8 @@ Now, you'll want a local copy of this repo. You can make that with the commands:
     cd oci-sap-dev
     ls
 
-## Deploy
-Pick a module and `cd` into the directory containing it.  You can deploy with the following Terraform commands:
+## Deploy on single-AD
+Pick single-ad deployment typing `cd single-ad`. You can deploy with the following Terraform commands:
 
     terraform init
     terraform plan
