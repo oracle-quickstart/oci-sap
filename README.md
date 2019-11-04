@@ -1,4 +1,4 @@
-# oci-sap-dev
+# oci-sap
 These are Terraform modules to prepare infrastructure and resources for deploying Oracle Database based SAP apps on Oracle Cloud Infrastructure(OCI).
 
 ## Terraform Provider for Oracle Cloud Infrastructure
