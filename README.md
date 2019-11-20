@@ -14,8 +14,8 @@ and [setup guide](https://www.terraform.io/docs/providers/oci/guides/version-3-u
 ## Clone the Module
 Now, you'll want a local copy of this repo. You can make that with the commands:
 
-    git clone https://github.com/oracle/oci-sap-dev.git
-    cd oci-sap-dev
+    git clone https://github.com/oracle-quickstart/oci-sap.git
+    cd oci-sap
     ls
 
 ## Deploy on single-AD
