@@ -1,0 +1,2 @@
+terraform fmt
+terraform validate
